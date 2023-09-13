@@ -228,27 +228,30 @@ function love.update(dt)
     --
     -- paddles can move no matter what state we're in
     --
-    -- player 1
-    if gameState == 'play' then
-        if ball.y < player1.y-5 then
-            player1.dy = -PADDLE_SPEED
-        elseif ball.y+ball.height > player1.y+player1.height+5 then
-            player1.dy = PADDLE_SPEED
-        else
-            player1.dy = 0
-        end
+    -- player 1 (user)
+    if love.keyboard.isDown('up') then
+        player1.dy = -PADDLE_SPEED
+    elseif love.keyboard.isDown('down') then
+        player1.dy = PADDLE_SPEED
     else
-        player1.dy = 0 
+        player1.dy = 0
     end
 
-    -- player 2
-    if love.keyboard.isDown('up') then
-        player2.dy = -PADDLE_SPEED
-    elseif love.keyboard.isDown('down') then
-        player2.dy = PADDLE_SPEED
+    -- player 2 (AI)
+    if gameState == 'play' then
+        if ball.y < player2.y-5 then
+            player2.dy = -PADDLE_SPEED
+        elseif ball.y+ball.height > player2.y+player2.height+5 then
+            player2.dy = PADDLE_SPEED
+        else
+            player2.dy = 0
+        end
     else
-        player2.dy = 0
+        player2.dy = 0 
     end
+
+    -- TERMINAL COMMAND TO RUN GAME:
+    -- "C:\Program Files\LOVE\love.exe" "C:\Users\mirca\github-classroom\Ensign-College\pong-MiriamJB"
 
     -- update our ball based on its DX and DY only if we're in play state;
     -- scale the velocity by dt so movement is framerate-independent
